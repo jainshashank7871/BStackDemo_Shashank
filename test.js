@@ -1,4 +1,3 @@
-// const {Builder, By, Key, until} = require('selenium-webdriver');
 import inquirer from 'inquirer';
 import {Builder, By, Key} from 'selenium-webdriver';
 
