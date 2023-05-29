@@ -1,8 +1,10 @@
 import inquirer from 'inquirer';
-import {Builder, By, Key} from 'selenium-webdriver';
-
+import { Builder, By, Key } from 'selenium-webdriver';
+import { strict as assert } from 'assert';
 
 let username, password, browser, prompt;
+
+let url = 'https://live.browserstack.com/dashboard';
 
 if (process.argv[2] && process.argv[3] && process.argv[4]) {
   username = process.argv[2]
@@ -15,9 +17,10 @@ if (process.argv[2] && process.argv[3] && process.argv[4]) {
 }
 
 async function runTest(browserName, username, pwd) {
+
   let browser = await new Builder().forBrowser(browserName).build();
   try {
-    await browser.get('https://live.browserstack.com/dashboard');
+    await browser.get(url);
 
     await browser.findElement(By.id('user_email_login')).sendKeys(username);
     await browser.findElement(By.id('user_password')).sendKeys(pwd);
@@ -25,20 +28,31 @@ async function runTest(browserName, username, pwd) {
     await browser.sleep(16000);
     const mac_block1 = await browser.findElement(By.className('accordion--mac'));
     mac_block1.click();
+    await browser.sleep(3000);
+    await mac_block1.findElement(By.css("div[data-test-ositem = 'macmty']")).click();
+    await browser.sleep(3000);
+    const browserTitle = await browser.findElement(By.css("div[data-rbd-draggable-id = 'macmty__chrome__113.0']")).getAttribute("innerText");
     
-    /** can not execute the below code due to 1 min limit on free account **/ 
+    assert.strictEqual(browserTitle, '113\nLatest', 'Positive case - Browser title is correct');
 
-    // await mac_block1.findElement(By.css("div[data-test-ositem = 'macmty']")).click();
-    // await browser.sleep(3000);
-    // await browser.findElement(By.css("div[data-rbd-draggable-id = 'macmty__chrome__113.0']")).click();
-
+    // Negative case: Find a non-existent element on the page
+    try {
+        await browser.findElement(By.id('nonExistentElement'));
+        assert.fail('Negative case - Element is found (unexpected)');
+    } catch (error) {
+          assert.strictEqual(
+            error.name,
+            'NoSuchElementError',
+            'Negative case - Element is not found (expected)'
+          );
+      }
   } finally {
     // await browser.wait(browser.quit(),20000)
   }
 }
 
 async function getInput() {
-  if (prompt){
+  if (prompt) {
     const answers = await inquirer.prompt([
       {
         type: 'input',
@@ -63,8 +77,8 @@ async function getInput() {
     browser = answers.browser;
   }
 
-  console.log("Started for "+ browser + '...');
-  runTest(browser,username, password);
+  console.log("Started for " + browser + '...');
+  runTest(browser, username, password);
 }
 
 getInput();
