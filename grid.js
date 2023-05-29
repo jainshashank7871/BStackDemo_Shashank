@@ -39,15 +39,6 @@ async function runTest(browserName, username, password) {
     await browser.findElement(By.id('user_password')).sendKeys(password);
     await browser.findElement(By.id('user_submit')).sendKeys('webdriver', Key.RETURN);
 
-
-    // // Assert the page title
-    // const pageTitle = await driver.getTitle();
-    // if (pageTitle.includes('Selenium')) {
-    //   console.log('Test passed: Page title contains "Selenium"');
-    // } else {
-    //   console.error('Test failed: Page title does not contain "Selenium"');
-    // }
-
   } finally {
     // Quit the WebDriver
     // await browser.quit();
