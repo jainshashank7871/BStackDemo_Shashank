@@ -1,7 +1,7 @@
 const { Builder, By, Key, until, Capabilities } = require("selenium-webdriver");
 
-let username = "jainshashank7871@gmail.com";
-let pwd = "Welcome@12"
+let username = "YOUR USERNAME";
+let pwd = "YOUR PASSWORD"
 
 
 let url = 'https://live.browserstack.com/dashboard';
