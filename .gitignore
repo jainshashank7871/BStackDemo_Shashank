@@ -1,4 +1,9 @@
-node_modules/*
-package-lock.json
-log/*
-*.log
+local_driver/node_modules/*
+remote_driver/node_modules/*
+bstack_driver/node_modules/*
+bstack_driver/package-lock.json
+remote_driver/package-lock.json
+local_driver/package-lock.json
+bstack_driver/log/*
+bstack_driver/*.log
+drivers/

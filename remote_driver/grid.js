@@ -1,7 +1,6 @@
 import { Builder, By, Key } from 'selenium-webdriver';
-import Options from 'selenium-webdriver/firefox.js';
 import inquirer from 'inquirer';
-
+import { strict as assert } from 'assert';
 
 let username, password, browser, prompt;
 
@@ -17,7 +16,7 @@ if (process.argv[2] && process.argv[3] && process.argv[4]) {
   console.log('Username, Password or Browser is not present.');
 }
 
-async function runTest(browserName, username, password) {
+async function runTest(browserName, username, pwd) {
   // Set up the Selenium Grid URL and desired capabilities
   const gridUrl = 'http://localhost:4444/';
   const capabilities = {
@@ -30,19 +29,36 @@ async function runTest(browserName, username, password) {
     .withCapabilities(capabilities)
     .build();
 
-  try {
-    // Navigate to a website
-    await browser.get(url);
-
-
-    await browser.findElement(By.id('user_email_login')).sendKeys(username);
-    await browser.findElement(By.id('user_password')).sendKeys(password);
-    await browser.findElement(By.id('user_submit')).sendKeys('webdriver', Key.RETURN);
-
-  } finally {
-    // Quit the WebDriver
-    // await browser.quit();
-  }
+    try {
+      await browser.get(url);
+  
+      await browser.findElement(By.id('user_email_login')).sendKeys(username);
+      await browser.findElement(By.id('user_password')).sendKeys(pwd);
+      await browser.findElement(By.id('user_submit')).sendKeys('webdriver', Key.RETURN);
+      await browser.sleep(16000);
+      const mac_block1 = await browser.findElement(By.className('accordion--mac'));
+      mac_block1.click();
+      await browser.sleep(3000);
+      await mac_block1.findElement(By.css("div[data-test-ositem = 'macmty']")).click();
+      await browser.sleep(3000);
+      const browserTitle = await browser.findElement(By.css("div[data-rbd-draggable-id = 'macmty__chrome__113.0']")).getAttribute("innerText");
+      
+      assert.strictEqual(browserTitle, '113', 'Positive case - Browser title is correct');
+  
+      // Negative case: Find a non-existent element on the page
+      try {
+          await browser.findElement(By.id('nonExistentElement-123'));
+          assert.fail('Negative case - Element is found (unexpected)');
+      } catch (error) {
+            assert.strictEqual(
+              error.name,
+              'NoSuchElementError',
+              'Negative case - Element is not found (expected)'
+            );
+        }
+    } finally {
+      await browser.wait(browser.quit(),20000)
+    }
 }
 
 

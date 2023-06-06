@@ -33,11 +33,11 @@ async function runTest(browserName, username, pwd) {
     await browser.sleep(3000);
     const browserTitle = await browser.findElement(By.css("div[data-rbd-draggable-id = 'macmty__chrome__113.0']")).getAttribute("innerText");
     
-    assert.strictEqual(browserTitle, '113\nLatest', 'Positive case - Browser title is correct');
+    assert.strictEqual(browserTitle, '113', 'Positive case - Browser title is correct');
 
     // Negative case: Find a non-existent element on the page
     try {
-        await browser.findElement(By.id('nonExistentElement'));
+        await browser.findElement(By.id('nonExistentElement-123'));
         assert.fail('Negative case - Element is found (unexpected)');
     } catch (error) {
           assert.strictEqual(
@@ -47,7 +47,7 @@ async function runTest(browserName, username, pwd) {
           );
       }
   } finally {
-    // await browser.wait(browser.quit(),20000)
+    await browser.wait(browser.quit(),20000)
   }
 }
 
