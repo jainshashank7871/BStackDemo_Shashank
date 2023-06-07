@@ -1,5 +1,8 @@
 **/node_modules/*
+**/**/node_modules/*
 **/package-lock.json
+**/**/log/*
+**/**/results/*
 **/log/*
 **/*.log
 drivers/
@@ -7,3 +10,14 @@ drivers/
 **/browserstack.err
 **/.vscode/
 **/.env
+
+**/**/*.aes
+**/**/cypress/downloads
+**/**/cypress/screenshots
+**/**/cypress/videos
+**/**/cypress/logs
+**/**/cypress/fixtures/profile.json
+**/**/cypress/fixtures/users.json
+**/**/.history
+**/**/env
+**/**/.DS_Store

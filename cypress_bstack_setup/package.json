@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "browserstack-cypress-cli": "^1.22.1"
+  }
+}
