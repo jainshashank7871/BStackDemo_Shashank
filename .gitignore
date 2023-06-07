@@ -21,3 +21,4 @@ drivers/
 **/**/.history
 **/**/env
 **/**/.DS_Store
+jest-js-browserstack/
