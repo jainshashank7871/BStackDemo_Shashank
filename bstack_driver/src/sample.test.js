@@ -1,8 +1,8 @@
 const { Builder, By, Key, until, Capabilities } = require("selenium-webdriver");
+require('dotenv').config();
 
-let username = "YOUR USERNAME";
-let pwd = "YOUR PASSWORD"
-
+let email = process.env.BROWSERSTACK_EMAIL;
+let pwd = process.env.BROWSERSTACK_PWD;
 
 let url = 'https://live.browserstack.com/dashboard';
 
@@ -26,7 +26,7 @@ describe("BStack demo test", () => {
     let browser = driver;
     await browser.get(url);
 
-    await browser.findElement(By.id('user_email_login')).sendKeys(username);
+    await browser.findElement(By.id('user_email_login')).sendKeys(email);
     await browser.findElement(By.id('user_password')).sendKeys(pwd);
     await browser.findElement(By.id('user_submit')).sendKeys('webdriver', Key.RETURN);
     await browser.sleep(15000);

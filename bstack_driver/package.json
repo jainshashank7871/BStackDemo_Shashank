@@ -19,13 +19,13 @@
   },
   "dependencies": {
     "browserstack-local": "^1.4.8",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.1.4",
     "inquirer": "^9.2.6",
     "selenium-webdriver": "4.1.2",
     "yargs": "^17.7.2"
   },
   "scripts": {
-    "sample-test": "browserstack-node-sdk jest -- src/sample.test.js",
+    "sample-test": "browserstack-node-sdk jest src/sample.test.js",
     "sample-local-test": "browserstack-node-sdk jest src/sample-local.test.js",
     "postinstall": "npm update browserstack-node-sdk"
   }
