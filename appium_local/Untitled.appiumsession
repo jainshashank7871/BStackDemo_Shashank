@@ -1,0 +1,55 @@
+{
+  "version": "1.0",
+  "caps": [
+    {
+      "type": "text",
+      "name": "platformName",
+      "value": "Android"
+    },
+    {
+      "type": "text",
+      "name": "platformVersion",
+      "value": "11.0"
+    },
+    {
+      "type": "text",
+      "name": "app",
+      "value": "/Users/shashankjain/Documents/work/BStackDemo_Shashank/appium_local/WikipediaSample.apk"
+    },
+    {
+      "type": "text",
+      "name": "automationName",
+      "value": "UiAutomator2"
+    }
+  ],
+  "server": {
+    "local": {},
+    "remote": {
+      "hostname": "0.0.0.0",
+      "port": "4723",
+      "ssl": false,
+      "path": "/"
+    },
+    "sauce": {
+      "dataCenter": "us-west-1"
+    },
+    "headspin": {},
+    "browserstack": {},
+    "lambdatest": {},
+    "advanced": {
+      "allowUnauthorized": false
+    },
+    "bitbar": {},
+    "kobiton": {},
+    "perfecto": {},
+    "pcloudy": {},
+    "testingbot": {},
+    "experitest": {},
+    "roboticmobi": {},
+    "remotetestkit": {}
+  },
+  "serverType": "remote",
+  "visibleProviders": [
+    "browserstack"
+  ]
+}

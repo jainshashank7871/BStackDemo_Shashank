@@ -5,8 +5,8 @@ let Q = wd.Q;
 
 desiredCaps = {
   // Set your BrowserStack access credentials
-  'browserstack.user' : 'YOUR_USERNAME',
-  'browserstack.key' : 'ACCESS_KEY',
+  'browserstack.user' : 'BROWSERSTACK_USERNAME',
+  'browserstack.key' : 'BROWSERSTACK_ACCESS_KEY',
 
   // Set URL of the application under test
   'app' : 'bs://452f2ed6e9c221472771713e263d45bc9c0194c5',

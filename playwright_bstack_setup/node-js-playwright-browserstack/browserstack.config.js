@@ -16,8 +16,8 @@ const caps = {
   os_version: 'catalina',
   name: 'My first playwright test',
   build: 'playwright-build',
-  'browserstack.username': process.env.BROWSERSTACK_USERNAME || 'YOUR_USERNAME',
-  'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY || 'YOUR_ACCESS_KEY',
+  'browserstack.username': process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
+  'browserstack.accessKey': process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
   'browserstack.local': false, 
   'client.playwrightVersion': clientPlaywrightVersion,
 };

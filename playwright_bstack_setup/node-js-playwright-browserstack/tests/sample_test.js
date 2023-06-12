@@ -3,35 +3,66 @@ const { test, expect } = require('@playwright/test');
 
 console.log(123)
 
-test('BstackDemo Add to cart', async ({ page },testInfo) => {
+let email = process.env.BROWSERSTACK_EMAIL || 'jainshashank7871@gmail.com';
+let pwd = process.env.BROWSERSTACK_PWD || 'Welcome@12';
+
+let url = 'https://live.browserstack.com/dashboard';
+
+test('BstackDemo Live Login', async ({ page },testInfo) => {
 
 try{
 
   await page.evaluate(_ => {},`browserstack_executor: ${JSON.stringify({action: "setSessionName", arguments: {name:testInfo.project.name}})}`);
   await page.waitForTimeout(5000);
 
-  await page.goto('https://www.bstackdemo.com/',{ waitUntil: 'networkidle' });
-  await page.locator('[id="\\32 "]').getByText('Add to cart').click();
-  await page.getByText('Checkout').click();
-  await page.locator('#username svg').click();
-  await page.locator('#react-select-2-option-0-0').click();
-  await page.locator('#password svg').click();
-  await page.locator('#react-select-3-option-0-0').click();
-  await page.getByRole('button', { name: 'Log In' }).click();
-  await page.getByLabel('First Name').click();
-  await page.getByLabel('First Name').fill('SampleFirst');
-  await page.getByLabel('Last Name').click();
-  await page.getByLabel('Last Name').fill('sampleLast');
-  await page.getByLabel('Address').click();
-  await page.getByLabel('Address').fill('sampleAddress');
-  await page.getByLabel('State/Province').click();
-  await page.getByLabel('State/Province').fill('SampleState');
-  await page.getByLabel('Postal Code').click();
-  await page.getByLabel('Postal Code').fill('123456');
-  await page.getByRole('button', { name: 'Submit' }).click();
-  await page.getByRole('button', { name: 'Continue Shopping »' }).click();
+  await page.goto(url,{ waitUntil: 'networkidle' });
 
-  await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'passed',reason: 'Product added to cart'}})}`);
+
+
+  const email_element = await page.$("#user_email_login");
+
+  // @ts-ignore
+  await email_element.type(email);
+
+  const pwd_element = await page.$("#user_password");
+
+  // @ts-ignore
+  await pwd_element.type(pwd);
+
+  console.log(email, pwd);
+
+  const submit_element = await page.$("#user_submit");
+
+  // @ts-ignore
+  await submit_element.click();
+
+  await page.waitForTimeout(16000);
+
+  const invite_element = await page.$("#invite-link");
+  
+
+  try {
+    
+    // Attempt to find a element
+    const nonExistentElement = await page.$('.non-existent-element');
+
+    if (!nonExistentElement) {
+      console.log('Negative test case passed: Non-existent element is not found.');
+    } else {
+      console.error('Negative test case failed: Non-existent element found.');
+    }
+  } catch (error) {
+    console.error('Negative test case failed:', error);
+  } finally {
+    console.log('all test done');
+  }
+
+  if (invite_element){
+    await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'passed',reason: 'Successfully logged in'}})}`);
+  }
+  else{
+    await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'failed',reason: 'Test failed'}})}`);
+  }
 
 } catch (e) {
   console.log(e);
