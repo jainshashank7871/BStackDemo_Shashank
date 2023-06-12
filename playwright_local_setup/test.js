@@ -1,4 +1,4 @@
-const { chromium } = require('playwright');
+const { firefox } = require('playwright');
 require('dotenv').config();
 
 let email = process.env.BROWSERSTACK_EMAIL;
@@ -7,18 +7,18 @@ let pwd = process.env.BROWSERSTACK_PWD;
 let url = 'https://live.browserstack.com/dashboard';
 
 (async () => {
-  const browser = await chromium.launch();
+  const browser = await firefox.launch({ headless: false });
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  await page.goto(url);
+  await page.goto(url,{ waitUntil: 'networkidle' });
 
   // await context.clearCookies();
 
   // await page.clearCache();
 
   /** tets tetste tste*/
-
+  
   const email_element = await page.$("#user_email_login");
 
   await email_element.type(email);

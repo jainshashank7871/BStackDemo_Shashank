@@ -36,7 +36,7 @@ const config = {
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: 10,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -57,12 +57,17 @@ const config = {
       use: {
         connectOptions: { wsEndpoint: getCdpEndpoint('chrome@latest:Windows 11','test1') },
       },
-    }
-    ,
+    },
     {
-      name: 'playwright-webkit@latest:OSX Ventura',
+      name: 'chrome@latest:OSX Catalina',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
       use: {
-        connectOptions: { wsEndpoint: getCdpEndpoint('playwright-webkit@latest:OSX Ventura', 'test2') }
+        connectOptions: { wsEndpoint: getCdpEndpoint('chrome@latest:OSX Catalina', 'test4') }
+      },
+    },
+    {
+      name: 'playwright-firefox:OSX Catalina',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+      use: {
+        connectOptions: { wsEndpoint: getCdpEndpoint('playwright-firefox:OSX Catalina', 'test6') }
       },
     },
     {
@@ -70,7 +75,47 @@ const config = {
       use: {
         connectOptions: { wsEndpoint: getCdpEndpoint('playwright-firefox:Windows 11', 'test3') }
       },
-    }
+    },
+
+    {
+      name: 'playwright-webkit@latest:OSX Catalina',
+      use: {
+        connectOptions: { wsEndpoint: getCdpEndpoint('playwright-webkit@latest:OSX Catalina', 'test2') }
+      },
+    },
+    {
+      name: 'playwright-webkit:OSX Catalina',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+      use: {
+        connectOptions: { wsEndpoint: getCdpEndpoint('playwright-webkit:OSX Catalina', 'test7') }
+      },
+    },
+
+
+    {
+      name: 'edge@latest:OSX Catalina',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+      use: {
+        connectOptions: { wsEndpoint: getCdpEndpoint('edge@latest:OSX Catalina', 'test5') }
+      },
+    },
+    {
+      name: 'edge@latest-1:OSX Catalina',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+      use: {
+        connectOptions: { wsEndpoint: getCdpEndpoint('edge@latest-1:OSX Catalina', 'test8') }
+      },
+    },
+
+    {
+      name: 'playwright-chromium:OSX Big Sur',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+      use: {
+        connectOptions: { wsEndpoint: getCdpEndpoint('playwright-chromium:OSX Big Sur', 'test9') }
+      },
+    },
+    {
+      name: 'playwright-chromium:OSX Ventura',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+      use: {
+        connectOptions: { wsEndpoint: getCdpEndpoint('playwright-chromium:OSX Ventura', 'test10') }
+      },
+    },
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */

@@ -1,8 +1,6 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-console.log(123)
-
 let email = process.env.BROWSERSTACK_EMAIL || 'jainshashank7871@gmail.com';
 let pwd = process.env.BROWSERSTACK_PWD || 'Welcome@12';
 
@@ -10,64 +8,62 @@ let url = 'https://live.browserstack.com/dashboard';
 
 test('BstackDemo Live Login', async ({ page },testInfo) => {
 
-try{
+  try{
 
-  await page.evaluate(_ => {},`browserstack_executor: ${JSON.stringify({action: "setSessionName", arguments: {name:testInfo.project.name}})}`);
-  await page.waitForTimeout(5000);
+    await page.evaluate(_ => {},`browserstack_executor: ${JSON.stringify({action: "setSessionName", arguments: {name:testInfo.project.name}})}`);
+    await page.waitForTimeout(5000);
 
-  await page.goto(url,{ waitUntil: 'networkidle' });
+    await page.goto(url,{ waitUntil: 'networkidle' });
 
+    const email_element = await page.$("#user_email_login");
 
+    // @ts-ignore
+    await email_element.type(email);
 
-  const email_element = await page.$("#user_email_login");
+    const pwd_element = await page.$("#user_password");
 
-  // @ts-ignore
-  await email_element.type(email);
+    // @ts-ignore
+    await pwd_element.type(pwd);
 
-  const pwd_element = await page.$("#user_password");
+    console.log(email, pwd);
 
-  // @ts-ignore
-  await pwd_element.type(pwd);
+    const submit_element = await page.$("#user_submit");
 
-  console.log(email, pwd);
+    // @ts-ignore
+    await submit_element.click();
 
-  const submit_element = await page.$("#user_submit");
+    await page.waitForTimeout(16000);
 
-  // @ts-ignore
-  await submit_element.click();
-
-  await page.waitForTimeout(16000);
-
-  const invite_element = await page.$("#invite-link");
-  
-
-  try {
+    const invite_element = await page.$("#invite-link");
     
-    // Attempt to find a element
-    const nonExistentElement = await page.$('.non-existent-element');
 
-    if (!nonExistentElement) {
-      console.log('Negative test case passed: Non-existent element is not found.');
-    } else {
-      console.error('Negative test case failed: Non-existent element found.');
+    try {
+      
+      // Attempt to find a element
+      const nonExistentElement = await page.$('.non-existent-element');
+
+      if (!nonExistentElement) {
+        console.log('Negative test case passed: Non-existent element is not found.');
+      } else {
+        console.error('Negative test case failed: Non-existent element found.');
+      }
+    } catch (error) {
+      console.error('Negative test case failed:', error);
+    } finally {
+      console.log('all test done');
     }
-  } catch (error) {
-    console.error('Negative test case failed:', error);
-  } finally {
-    console.log('all test done');
-  }
 
-  if (invite_element){
-    await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'passed',reason: 'Successfully logged in'}})}`);
-  }
-  else{
+    if (invite_element){
+      await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'passed',reason: 'Successfully logged in'}})}`);
+    }
+    else{
+      await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'failed',reason: 'Test failed'}})}`);
+    }
+
+  } catch (e) {
+    console.log(e);
     await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'failed',reason: 'Test failed'}})}`);
-  }
 
-} catch (e) {
-  console.log(e);
-  await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'setSessionStatus',arguments: {status: 'failed',reason: 'Test failed'}})}`);
-
-}  
+  }  
 
 });
