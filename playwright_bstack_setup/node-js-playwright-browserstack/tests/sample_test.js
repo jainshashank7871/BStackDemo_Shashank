@@ -1,8 +1,8 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
-let email = process.env.BROWSERSTACK_EMAIL || 'jainshashank7871@gmail.com';
-let pwd = process.env.BROWSERSTACK_PWD || 'Welcome@12';
+let email = process.env.BROWSERSTACK_EMAIL || 'BROWSERSTACK_EMAIL';
+let pwd = process.env.BROWSERSTACK_PWD || 'BROWSERSTACK_PWD';
 
 let url = 'https://live.browserstack.com/dashboard';
 
